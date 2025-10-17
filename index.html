@@ -1179,7 +1179,12 @@
             flex-direction: column;
             align-items: center;
             gap: 10px;
+            min-width: 0;
         }
+
+        .row-explorer .panel-right { min-width: 0; }
+
+        .row-explorer canvas { max-width: 100%; height: auto; }
 
         #re2d {
             border-radius: 8px;
@@ -1229,7 +1234,17 @@
         @media (max-width: 900px) {
             .row-explorer {
                 grid-template-columns: 1fr;
+                padding: 16px;
             }
+            #re2d { width: 100%; height: auto; }
+            #signalChart { width: 100%; height: 220px; }
+            .row-explorer .controls { gap: 12px; }
+        }
+
+        @media (max-width: 480px) {
+            .row-explorer { padding: 12px; gap: 16px; }
+            #signalChart { height: 200px; }
+            .row-label { font-size: 0.8rem; }
         }
 
         /* Responsive design for spectrum explorer */
@@ -1421,11 +1436,12 @@
 
         <!-- Section 14: Review text -->
         <section id="section13">
-            <p class="md-text">In this lesson, we made the crucial conceptual leap from 1D signals to 2D images. We've learned that:
-- An image can be viewed as a <strong>2D spatial signal</strong>, where pixel values change over space rather than time.
-- The rate of this change is called <strong>spatial frequency</strong>. Smooth areas have low frequencies, while detailed areas with sharp edges have high frequencies.
-
-This simple shift in perspective is incredibly powerful. Now that we know we can think of images as signals, we're ready to learn how to analyze their frequencies. In the next lesson, we will meet the mathematical tool that makes it all possible: the Discrete Cosine Transform (DCT).</p>
+            <p class="md-text">In this lesson, we made the crucial conceptual leap from 1D signals to 2D images. We've learned that:</p>
+            <ul>
+                <li>An image can be viewed as a <strong>2D spatial signal</strong>, where pixel values change over space rather than time.</li>
+                <li>The rate of this change is called <strong>spatial frequency</strong>. Smooth areas have low frequencies, while detailed areas with sharp edges have high frequencies.</li>
+            </ul>
+            <p class="md-text">This simple shift in perspective is incredibly powerful. Now that we know we can think of images as signals, we're ready to learn how to analyze their frequencies. In the next lesson, we will meet the mathematical tool that makes it all possible: the Discrete Cosine Transform (DCT).</p>
         </section>
 
         <!-- Mark as Completed Button -->
@@ -1858,8 +1874,8 @@ This simple shift in perspective is incredibly powerful. Now that we know we can
             slider.addEventListener('input', () => { updateRow(Number(slider.value)); revealInteractiveContinue(); });
             canvas2d.addEventListener('mousedown', (e) => { handlePointer(e); revealInteractiveContinue(); });
             canvas2d.addEventListener('mousemove', (e) => { if (e.buttons & 1) { handlePointer(e); } });
-            canvas2d.addEventListener('touchstart', (e) => { if (e.touches[0]) handlePointer(e.touches[0]); revealInteractiveContinue(); }, { passive: true });
-            canvas2d.addEventListener('touchmove', (e) => { if (e.touches[0]) handlePointer(e.touches[0]); }, { passive: true });
+            canvas2d.addEventListener('touchstart', (e) => { if (e.touches && e.touches[0]) handlePointer(e.touches[0]); revealInteractiveContinue(); }, { passive: true });
+            canvas2d.addEventListener('touchmove', (e) => { if (e.touches && e.touches[0]) handlePointer(e.touches[0]); }, { passive: true });
 
             playBtn.addEventListener('click', () => {
                 playing = !playing;
